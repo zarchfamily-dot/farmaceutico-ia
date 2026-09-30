@@ -9,7 +9,7 @@ st.set_page_config(
     page_title="Agente IA Vademécum con API Oficial", page_icon="💊", layout="centered"
 )
 
-st.title("💊 Asistente Inteligente de Medicamentos (CIMA / AEMPS)")
+st.title("💊 Asistente Inteligente de Medicamentos (ADALID ZARATE CHOQUEHUANCA)")
 st.write(
     "Sube una foto de un medicamento o escribe su nombre. El agente consultará"
     " la API oficial pública para extraer datos precisos."
