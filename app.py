@@ -28,13 +28,11 @@ def buscar_medicamento_cima(nombre_o_principio):
       data = response.json()
       resultados = data.get("resultados", [])
       if resultados:
-        # Tomamos los primeros 2 resultados más relevantes
         info_resumen = []
         for med in resultados[:2]:
           nombre = med.get("nombre", "Desconocido")
           lab = med.get("labtitular", "Desconocido")
           nregistro = med.get("nregistro", "")
-          # Extraer principios activos si existen
           p_activos = ", ".join(
               [p.get("nombre", "") for p in med.get("pactivos", [])]
           )
@@ -50,7 +48,9 @@ def buscar_medicamento_cima(nombre_o_principio):
 
 if api_key:
   genai.configure(api_key=api_key)
-  model = genai.GenerativeModel("gemini-1.5-flash")
+
+  # 👉 MODELO ACTUALIZADO AQUÍ PARA EVITAR EL ERROR 404
+  model = genai.GenerativeModel("gemini-3-flash")
 
   input_type = st.radio(
       "¿Cómo deseas ingresar el medicamento?", ("Escribir nombre", "Subir imagen")
@@ -85,7 +85,6 @@ if api_key:
           "Extrayendo información y consultando API oficial de Vademécum..."
       ):
 
-        # Paso 1: Si el usuario subió una imagen, usamos Gemini para extraer primero el nombre clave del texto de la imagen
         nombre_extraido = medicamento_input
         if imagen_cargada:
           prompt_extraccion = (
@@ -100,12 +99,10 @@ if api_key:
               f" *{nombre_extraido}*"
           )
 
-        # Paso 2: Consultar la API pública externa (CIMA AEMPS)
         datos_oficiales = "No se consultó API externa."
         if nombre_extraido:
           datos_oficiales = buscar_medicamento_cima(nombre_extraido)
 
-        # Paso 3: Agente de IA procesa la información oficial recuperada + contexto clínico seguro
         prompt_final = f"""
                 Eres un asistente farmacéutico virtual experto y riguroso.
                 
