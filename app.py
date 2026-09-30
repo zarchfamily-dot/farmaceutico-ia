@@ -50,7 +50,7 @@ if api_key:
   genai.configure(api_key=api_key)
 
   # 👉 MODELO ACTUALIZADO AQUÍ PARA EVITAR EL ERROR 404
-  model = genai.GenerativeModel("gemini-2.5-flash")
+  model = genai.GenerativeModel("gemini-3.8-flash")
 
   input_type = st.radio(
       "¿Cómo deseas ingresar el medicamento?", ("Escribir nombre", "Subir imagen")
